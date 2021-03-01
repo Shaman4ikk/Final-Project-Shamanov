@@ -15,7 +15,6 @@ public class SignupFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String path = request.getRequestURI().substring(request.getContextPath().length());
-        // sign, reg. не требует пользователя
         if (path.equals("/actionPages/LogOut.jsp") || path.equals("/") || path.equals("/signIn") || path.equals("/reg")  || path.equals("/setLang") || path.equals("/index.jsp") || path.equals("/actionPages/errorPage.jsp") ) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
@@ -24,7 +23,6 @@ public class SignupFilter implements Filter {
         User user = (User) session.getAttribute("user");
         switch (user.getRoot()) {
             case "admin": {
-                // все доступные пути для админа, jsp странички тоже(типо actionPages/searchPage.jsp)
                 if (path.equals("/redBook") || path.equals("/admin") || path.equals("/deleteBook")
                         || path.equals("/addBook") || path.equals("/redLibr") || path.equals("/addLibr") || path.equals("/deleteLibr")
                         || path.equals("/getUsersAdm") || path.equals("/setBan") || path.equals("/unBan")) {
@@ -55,7 +53,6 @@ public class SignupFilter implements Filter {
                 return;
             }
             default:
-                //перенаправление на ошибку
                 response.sendRedirect("/actionPages/errorPage.jsp");
         }
     }
